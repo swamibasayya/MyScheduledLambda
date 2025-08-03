@@ -11,7 +11,11 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
+      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+      SAM_CLI_TELEMETRY: 0  # Disable telemetry
+      
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -32,7 +36,7 @@ jobs:
       - name: Package SAM template
         run: |
           sam package \
-            --template-file serverless.template \
+            --template-file ./serverless.template \
             --output-template-file packaged.yaml \
             --s3-bucket ${{ secrets.S3_BUCKET_NAME }}
 
@@ -45,4 +49,4 @@ jobs:
             --region $AWS_REGION
 
       - name: Print CloudWatch logs hint
-        run: echo "Check CloudWatch Logs in AWS Console for scheduled logs."
+        run: echo "Check CloudWatch Logs in AWS Console for  scheduled lo gs."
