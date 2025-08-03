@@ -1,0 +1,48 @@
+﻿name: Deploy .NET Scheduled Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: Restore & Build
+        run: |
+          dotnet restore
+          dotnet build -c Release
+
+      - name: Package SAM template
+        run: |
+          sam package \
+            --template-file serverless.template \
+            --output-template-file packaged.yaml \
+            --s3-bucket ${{ secrets.S3_BUCKET_NAME }}
+
+      - name: Deploy Lambda with SAM
+        run: |
+          sam deploy \
+            --template-file packaged.yaml \
+            --stack-name ScheduledLambdaStack \
+            --capabilities CAPABILITY_IAM \
+            --region $AWS_REGION
+
+      - name: Print CloudWatch logs hint
+        run: echo "Check CloudWatch Logs in AWS Console for scheduled logs."
