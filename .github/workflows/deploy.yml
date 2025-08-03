@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      AWS_REGION: us-east-1
+      AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
       S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
@@ -46,7 +46,7 @@ jobs:
             --template-file packaged.yaml \
             --stack-name ScheduledLambdaStack \
             --capabilities CAPABILITY_IAM \
-            --region ${{ secrets.WS_REGION }} 
+            --region ${{ secrets.AWS_REGION }} 
 
       - name: Print CloudWatch logs hint
         run: echo "Check CloudWatch Logs in AWS Console for  scheduled lo gs."
