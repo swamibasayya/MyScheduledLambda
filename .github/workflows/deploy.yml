@@ -39,13 +39,14 @@ jobs:
             --template-file ./serverless.template \
             --output-template-file packaged.yaml \
             --s3-bucket ${{ secrets.S3_BUCKET_NAME }}
-
+            --region $AWS_REGION 
       - name: Deploy Lambda with SAM
         run: |
           sam deploy \
             --template-file packaged.yaml \
             --stack-name ScheduledLambdaStack \
             --capabilities CAPABILITY_IAM \
-            --region $AWS_REGION \
+            --region $AWS_REGION 
+            
       - name: Print CloudWatch logs hint
         run: echo "Check CloudWatch Logs in AWS Console for  scheduled lo gs."
