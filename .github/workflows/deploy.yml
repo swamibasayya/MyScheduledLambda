@@ -45,4 +45,4 @@ jobs:
             --region $AWS_REGION
 
       - name: Print CloudWatch logs hint
-        run: echo "Check CloudWatch Logs in AWS Console for scheduled logs."
+        run: echo "Check CloudWatch Logs in AWS Console for scheduled lo gs."
