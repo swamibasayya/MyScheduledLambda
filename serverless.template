@@ -1,0 +1,26 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "Scheduled Lambda every 5 minutes",
+
+  "Resources": {
+    "MyScheduledLambda": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MyScheduledLambda::MyScheduledLambda.Function::FunctionHandler",
+        "Runtime": "dotnet8",
+        "CodeUri": "",
+        "Timeout": 30,
+        "MemorySize": 256,
+        "Events": {
+          "Every5Min": {
+            "Type": "Schedule",
+            "Properties": {
+              "Schedule": "rate(5 minutes)"
+            }
+          }
+        }
+      }
+    }
+  }
+}
