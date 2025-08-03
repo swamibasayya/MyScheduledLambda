@@ -46,7 +46,6 @@ jobs:
             --template-file packaged.yaml \
             --stack-name ScheduledLambdaStack \
             --capabilities CAPABILITY_IAM \
-            --region ${{ secrets.AWS_REGION }} 
-
+            --region ${{ secrets.AWS_REGION }}
       - name: Print CloudWatch logs hint
         run: echo "Check CloudWatch Logs in AWS Console for  scheduled lo gs."
