@@ -36,7 +36,7 @@ jobs:
       - name: Package SAM template
         run: |
           sam package \
-            --template-file serverless.template \
+            --template-file ./serverless.template \
             --output-template-file packaged.yaml \
             --s3-bucket ${{ secrets.S3_BUCKET_NAME }}
 
