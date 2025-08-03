@@ -15,7 +15,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
       S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
       SAM_CLI_TELEMETRY: 0  # Disable telemetry
-      
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -32,7 +31,9 @@ jobs:
         run: |
           dotnet restore
           dotnet build -c Release
-
+      - name: Configure AWS CLI
+        run: aws configure set region $AWS_REGION 
+    
       - name: Package SAM template
         run: |
           sam package \
